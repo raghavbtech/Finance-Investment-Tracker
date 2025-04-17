@@ -1,0 +1,7 @@
+Disclaimer:
+if you delete db.sqlite file then you have to run the command 
+"from investment.utils import load_nse_stocks
+load_nse_stocks()
+exit()" 
+in your shell to extract all the stocks from nse to your database.
+This is one time only.(Only if you deleted sql lite file)

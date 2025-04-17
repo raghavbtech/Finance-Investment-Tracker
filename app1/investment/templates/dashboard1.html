@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Investment Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+<style>
+    /* Import Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap");
+
+/* Reset & Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Manrope", sans-serif;
+  background: #f6f8fc;
+  min-height: 100vh;
+  color: #1f2a44;
+  display: flex;
+  overflow-x: hidden;
+  transition: background 0.3s ease;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+}
+
+/* Header */
+.top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background: #ffffff;
+  background:#000 ;
+  border-bottom: 1px solid #e6e9f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.page-title {
+  font-weight: 600;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+}
+
+.search-contact {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.search-input {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #e6e9f0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  width: 280px;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:hover {
+  border-color: #6b21a8;
+}
+
+.search-input input {
+  border: none;
+  background: transparent;
+  width: 100%;
+  padding: 0.3rem 0.5rem;
+  font-size: 0.95rem;
+  outline: none;
+  color: #1f2a44;
+}
+
+.search-btn,
+.contact-btn {
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+  font-weight: 500;
+}
+
+.search-btn {
+  background: transparent;
+  color: #6b7280;
+}
+
+.contact-btn {
+  background: #6b21a8;
+  color: #ffffff;
+}
+
+.contact-btn:hover {
+  background: #5b1b8e;
+}
+
+/* Content Container */
+.content {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.finance-tracker {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Balance Info */
+.balance-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.balance-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #e6e9f0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.balance-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.balance-label {
+  font-size: 0.9rem;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.balance-amount {
+  font-size: 1.9rem;
+  font-weight: 600;
+  color: #1f2a44;
+}
+
+.positive {
+  color: #10wahab;
+}
+
+.negative {
+  color: #ef4444;
+}
+
+.dashboard-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1f2a44;
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 10px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #e6e9f0;
+}
+
+th {
+  background: #f9fafb;
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: #1f2a44;
+}
+
+td {
+  font-size: 0.9rem;
+  color: #4b5563;
+}
+
+tr:hover {
+  background: #f9fafb;
+}
+
+.profit {
+  color: #10wahab;
+  font-weight: 500;
+}
+
+.loss {
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.investment-actions a {
+  color: #6b21a8;
+  margin: 0 6px;
+  text-decoration: none;
+}
+
+.investment-actions a:hover {
+  color: #5b1b8e;
+  text-decoration: underline;
+}
+
+/* Summary Section */
+.summary-section {
+  margin-top: 2rem;
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.summary-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.summary-list {
+  list-style: none;
+}
+
+.summary-list li {
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+}
+
+.monthly-summary {
+  margin-top: 2rem;
+}
+
+/* Chart Section */
+.chart-section {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+/* Suggestions Section */
+.suggestions-section {
+  margin-top: 2rem;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem;
+  background: #f9fafb;
+  border-radius: 10px;
+}
+
+/* Top Performers */
+.top-performers {
+  margin-top: 2rem;
+}
+
+.top-performer-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e6e9f0;
+}
+
+.top-performer-item:last-child {
+  border-bottom: none;
+}
+
+/* Dashboard Links */
+.dashboard-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e6e9f0;
+}
+
+.dashboard-links a {
+  background: #6b21a8;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.dashboard-links a:hover {
+  background: #5b1b8e;
+  transform: translateY(-2px);
+}
+
+.logout-btn {
+  margin-left: auto;
+  background: #ef4444 !important;
+}
+
+.logout-btn:hover {
+  background: #dc2626 !important;
+}
+
+/* Right Sidebar */
+.right-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.video-section {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.video-container {
+  position: relative;
+  height: 200px;
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+  background: #e6e9f0;
+}
+
+.video-info {
+  padding: 1.5rem;
+}
+
+.video-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.promo-card {
+  background: #6b21a8;
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.promo-content h3 {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.promo-content p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+}
+
+.explore-btn {
+  background: #ffffff;
+  color: #6b21a8;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.explore-btn:hover {
+  background: #f9fafb;
+}
+
+.visual-element,
+.visual-element-2 {
+  display: none; /* Removed for simplicity */
+}
+
+/* Toggle Dark Mode */
+.toggle-dark {
+  background: #f9fafb;
+  border: 1px solid #e6e9f0;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle-dark:hover {
+  background: #e6e9f0;
+}
+
+/* Info Section */
+.info-section {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  margin-bottom: 2rem;
+}
+
+.info-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1f2a44;
+  margin-bottom: 1rem;
+}
+
+.info-card {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.info-card:hover {
+  background: #ffffff;
+  transform: translateY(-2px);
+}
+
+.info-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.info-card-header i {
+  color: #6b21a8;
+}
+
+.info-card-header h4 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.info-card p {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.info-btn {
+  background: #6b21a8;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.info-btn:hover {
+  background: #5b1b8e;
+}
+
+/* Dark Mode */
+.dark-mode {
+  background: #1f2a44;
+  color: #d1d5db;
+}
+
+.dark-mode .finance-tracker,
+.dark-mode .top-header,
+.dark-mode .video-section,
+.dark-mode .info-section {
+  background: #2d3748;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .balance-card,
+.dark-mode .summary-section,
+.dark-mode th,
+.dark-mode .info-card {
+  background: #374151;
+  border-color: #4b5563;
+}
+
+.dark-mode td,
+.dark-mode th {
+  border-color: #4b5563;
+  color: #d1d5db;
+}
+
+.dark-mode tr:hover {
+  background: #4b5563;
+}
+
+.dark-mode .dashboard-links a {
+  background: #6b21a8;
+}
+
+.dark-mode .logout-btn {
+  background: #ef4444 !important;
+}
+
+.dark-mode .toggle-dark {
+  background: #374151;
+  color: #d1d5db;
+  border-color: #4b5563;
+}
+
+.dark-mode .info-btn,
+.dark-mode .contact-btn {
+  background: #6b21a8;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .balance-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .balance-info {
+    grid-template-columns: 1fr;
+  }
+
+  .search-input {
+    width: 100%;
+  }
+}
+.loading {
+  opacity: 0.6;
+  position: relative;
+}
+.loading::after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  border: 2px solid #6b21a8;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  right: 10px;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.right-sidebar {
+  position: sticky;
+  top: 2rem;
+}
+
+
+
+</style>
+
+  </head>
+  <body>
+    <!-- Main Content Area -->
+    <div class="main-content" style="position: sticky;">
+      <!-- Header -->
+      <div class="top-header">
+        <div class="page-title">
+            <i class="fas fa-wallet"></i> Investments
+          </div>
+        <div class="search-contact">
+          
+          
+          <a href="{% url 'profile' %}" class="contact-btn" style="text-decoration: none;">Go Back to Profile</a>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="content">
+        <!-- Finance Tracker -->
+        <div class="finance-tracker">
+          <button id="toggle-dark" class="toggle-dark"><i class="fas fa-moon"></i> Toggle Dark Mode</button>
+
+          <!-- Balance Info -->
+          <div class="balance-info">
+            <div class="balance-card">
+              <div class="balance-label">
+                Total Invested <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="balance-amount">₹{{ total_invested|floatformat:2 }}</div>
+              
+            </div>
+
+            <div class="balance-card">
+              <div class="balance-label">
+                Current Value <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="balance-amount">₹{{ total_current|floatformat:2 }}</div>
+              
+            </div>
+
+            <div class="balance-card">
+              <div class="balance-label">
+                Net Profit/Loss <i class="fas fa-info-circle"></i>
+              </div>
+              <div class="balance-amount">₹{{ total_profit_loss|floatformat:2 }}</div>
+              
+            </div>
+          </div>
+
+          <!-- Investments Table -->
+          <div class="investments-section">
+            <h3 class="dashboard-title">Investment Details</h3>
+            <form method="get" style="margin-bottom: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;">
+  <div>
+    <label for="stock">Stock</label><br>
+    <input type="text" name="stock" placeholder="e.g. INFY" value="{{ request.GET.stock }}" style="padding: 0.4rem 0.8rem; border-radius: 8px; border: 1px solid #ccc;" />
+  </div>
+
+  <div>
+    <label for="start_date">Start Date</label><br>
+    <input type="date" name="start_date" value="{{ request.GET.start_date }}" style="padding: 0.4rem 0.8rem; border-radius: 8px; border: 1px solid #ccc;" />
+  </div>
+
+  <div>
+    <label for="end_date">End Date</label><br>
+    <input type="date" name="end_date" value="{{ request.GET.end_date }}" style="padding: 0.4rem 0.8rem; border-radius: 8px; border: 1px solid #ccc;" />
+  </div>
+
+  <div>
+    <label for="pl">Profit / Loss</label><br>
+    <select name="pl" style="padding: 0.5rem 0.8rem; border-radius: 8px; border: 1px solid #ccc;">
+      <option value="">-- All --</option>
+      <option value="profit" {% if request.GET.pl == "profit" %}selected{% endif %}>Profit Only</option>
+      <option value="loss" {% if request.GET.pl == "loss" %}selected{% endif %}>Loss Only</option>
+    </select>
+  </div>
+
+  <div style="margin-top: auto;">
+    <button type="submit" class="contact-btn"><i class="fas fa-filter"></i> Filter</button>
+    <a href="{% url 'dashboard' %}" class="btn-cancel" style="margin-left: 10px;">Reset</a>
+  </div>
+</form>
+
+            <div style="overflow-x: auto;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Stock</th>
+                    <th>Buy Price</th>
+                    <th>Current Price</th>
+                    <th>Quantity</th>
+                    <th>Date</th>
+                    <th>Invested Value</th>
+                    <th>Current Value</th>
+                    <th>Profit / Loss</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for investment in investments %}
+                  <tr>
+                    <td>{{ investment.investment_id }}</td>
+                    <td>{{ investment.investment_name }}</td>
+                    <td>{{ investment.stock.symbol }}</td>
+                    <td>₹{{ investment.buy_price|floatformat:2 }}</td>
+                    <td id="price-{{ investment.stock.symbol }}">
+                      {% if investment.current_price_display %}
+                        ₹{{ investment.current_price_display|floatformat:2 }}
+                      {% else %}
+                        -
+                      {% endif %}
+                    </td>
+                    <td>{{ investment.investment_quantity }}</td>
+                    <td>{{ investment.investment_date|date:"M d, Y" }}</td>
+                    <td>₹{{ investment.invested_value|floatformat:2 }}</td>
+                    <td id="value-{{ investment.stock.symbol }}">
+                      {% if investment.current_value %}
+                        ₹{{ investment.current_value|floatformat:2 }}
+                      {% else %}
+                        -
+                      {% endif %}
+                    </td>
+                    <td >
+                      {% if investment.profit_loss %}
+                        {% if investment.profit_loss > 0 %}
+                          <span  id="pl-{{ investment.stock.symbol }}" class="profit">₹{{ investment.profit_loss|floatformat:2 }}</span>
+                        {% else %}
+                          <span id="pl-{{ investment.stock.symbol }}" class="loss">₹{{ investment.profit_loss|floatformat:2 }}</span>
+                        {% endif %}
+                      {% else %}
+                      <span id="pl-{{ investment.stock.symbol }}">-</span>
+                      {% endif %}
+                    </td>
+                    <td class="investment-actions">
+                      <a href="{% url 'update_investment' investment.investment_id %}"><i class="fas fa-edit"></i> Edit</a> |
+                      <a href="{% url 'delete_investment' investment.investment_id %}" onclick="return confirm('Are you sure?');"><i class="fas fa-trash"></i> Delete</a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Live Profit/Loss Display -->
+          <div id="live-pl" style="margin-top: 1rem; padding: 0.75rem; background: #f9fafb; border-radius: 10px;">
+            <i class="fas fa-chart-line"></i> Net Profit/Loss: <span id="live-pl-value">₹{{ live_pl|floatformat:2 }}</span>
+          </div>
+          <!-- Summary Section -->
+          <div class="summary-section">
+            <h3 class="summary-title">Summary</h3>
+            <ul class="summary-list">
+              <li>
+                <strong>Total Invested:</strong>
+                <span>₹{{ total_invested|floatformat:2 }}</span>
+              </li>
+              <li>
+                <strong>Current Value:</strong>
+                <span>₹{{ total_current|floatformat:2 }}</span>
+              </li>
+              <li>
+                <strong>Net Profit / Loss:</strong>
+                {% if total_profit_loss > 0 %}
+                  <span class="profit">+₹{{ total_profit_loss|floatformat:2 }}</span>
+                {% elif total_profit_loss < 0 %}
+                  <span class="loss">-₹{{ total_profit_loss|floatformat:2|slice:"1:" }}</span>
+                {% else %}
+                  <span>₹0.00</span>
+                {% endif %}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Monthly Summary -->
+          <div class="monthly-summary">
+            <h3 class="summary-title">📅 Monthly Summary</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Invested</th>
+                  <th>Current</th>
+                  <th>P/L</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for month, data in monthly_summary.items %}
+                <tr>
+                  <td>{{ month }}</td>
+                  <td>₹{{ data.invested|floatformat:2 }}</td>
+                  <td>₹{{ data.current|floatformat:2 }}</td>
+                  <td>
+                    {% if data.pl > 0 %}
+                      <span class="profit">+₹{{ data.pl|floatformat:2 }}</span>
+                    {% else %}
+                      <span class="loss">₹{{ data.pl|floatformat:2 }}</span>
+                    {% endif %}
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Chart Section -->
+          <div class="chart-section" style="width: 550px; height: 550px; margin: 0 auto; text-align: center; ">
+            <h3 class="summary-title"><i class="fas fa-chart-pie"></i> Portfolio</h3>
+            <canvas id="investmentChart" ></canvas>
+          </div>
+
+          <!-- AI Suggestions -->
+          <div class="suggestions-section">
+            <h3 class="summary-title">🔍 AI-Based Suggestions</h3>
+            {% if suggestions %}
+            <div class="suggestions-list">
+              {% for tip in suggestions %}
+              <div class="suggestion-item">
+                <i class="fas fa-lightbulb positive"></i>
+                <p>{{ tip }}</p>
+              </div>
+              {% endfor %}
+            </div>
+            {% else %}
+            <p>No suggestions at the moment. You're all set! 🎉</p>
+            {% endif %}
+          </div>
+
+          <!-- Top Performers -->
+          <div class="top-performers">
+            <h3 class="summary-title">🏆 Top 3 Performers</h3>
+            <ol>
+              {% for stock in top_performers %}
+              <li>{{ stock.stock.symbol }} — <span class="profit">₹{{ stock.profit_loss|floatformat:2 }}</span></li>
+              {% endfor %}
+            </ol>
+          </div>
+
+          <!-- Dashboard Links -->
+          <div class="dashboard-links">
+            <a href="{% url 'add_investment' %}"><i class="fas fa-plus"></i> Add Investment</a>
+            <a href="{% url 'export_excel' %}"><i class="fas fa-file-excel"></i> Export to Excel</a>
+            <a href="{% url 'export_pdf' %}"><i class="fas fa-file-pdf"></i> Export to PDF</a>
+            <a href="{% url 'logout' %}" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+          </div>
+        </div>
+
+        <!-- Info Section -->
+<div class="info-section">
+    <h3 class="info-title"><i class="fas fa-info-circle"></i> Website Guide</h3>
+    
+    <div class="info-card">
+      <div class="info-card-header">
+        <i class="fas fa-chart-line"></i>
+        <h4>Investment Dashboard</h4>
+      </div>
+      <p>Track your investments, monitor performance, and view profit/loss metrics in real-time.</p>
+    </div>
+    
+    <div class="info-card">
+      <div class="info-card-header">
+        <i class="fas fa-filter"></i>
+        <h4>Investment Filters</h4>
+      </div>
+      <p>Use the filters to sort investments by stock name, date range, and profit/loss status.</p>
+    </div>
+    
+    <div class="info-card">
+      <div class="info-card-header">
+        <i class="fas fa-calendar-alt"></i>
+        <h4>Monthly Performance</h4>
+      </div>
+      <p>View your investment performance broken down by month to track your progress over time.</p>
+    </div>
+    
+    <div class="info-card">
+      <div class="info-card-header">
+        <i class="fas fa-chart-pie"></i>
+        <h4>Investment Distribution</h4>
+      </div>
+      <p>Visual representation of how your investments are distributed across different stocks.</p>
+    </div>
+    
+    <div class="info-card">
+      <div class="info-card-header">
+        <i class="fas fa-lightbulb"></i>
+        <h4>AI Suggestions</h4>
+      </div>
+      <p>Get personalized investment advice and suggestions based on your portfolio performance.</p>
+    </div>
+    <div class="info-card">
+      <div class="info-card-header">
+       NIFTY 50
+      </div>
+        <div class="balance-amount loading" id="nifty50">Loading...</div>
+        </div>
+      
+        <div class="info-card">
+          <div class="info-card-header">
+           Sensex
+          </div>
+        <div class="balance-amount loading" id="sensex">Loading...</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-header">
+           BankNifty
+          </div>
+          <div class="balance-amount loading" id="banknifty">Loading...</div>
+          </div>
+          <div class="info-card">
+            <div class="info-card-header">
+              BankEx
+            </div>
+        <div class="balance-amount loading" id="bankex">Loading...</div>
+        </div>
+    </div>
+    
+    
+  </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      const ctx = document.getElementById("investmentChart").getContext("2d");
+      const chart = new Chart(ctx, {
+        type: "pie",
+        data: {
+          labels: {{ chart_labels|safe }},
+          datasets: [{
+            label: "Portfolio",
+            data: {{ chart_data|safe }},
+            backgroundColor: ["#6b21a8", "#16a34a", "#ef4444", "#3b82f6", "#f59e0b"],
+            borderColor: "#ffffff",
+            borderWidth: 1,
+          }],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: { font: { family: "Manrope", size: 12 }, color: "#1f2a44" },
+            },
+          },
+          animation: { duration: 1000, easing: "easeInOutQuad" },
+        },
+      });
+    </script>
+    <script>
+      document.getElementById("toggle-dark").addEventListener("click", function () {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+      });
+      window.onload = function () {
+        if (localStorage.getItem("darkMode") === "true") {
+          document.body.classList.add("dark-mode");
+        }
+      };
+    </script>
+    <script>
+      function updateLivePrices() {
+  const investments = [
+    {% for inv in investments %}
+      {
+        symbol: "{{ inv.stock.symbol }}",
+        quantity: {{ inv.investment_quantity }},
+        buyPrice: {{ inv.buy_price }},
+        investedValue: {{ inv.invested_value|floatformat:2 }},
+      },
+    {% endfor %}
+  ];
+
+  let totalCurrent = 0;
+  let totalPL = 0;
+
+  // Create array of fetch promises
+  const fetchPromises = investments.map((inv) =>
+    fetch(`/investment/live-price/${inv.symbol}/`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.price) {
+          const price = parseFloat(data.price);
+          const currentValue = price * inv.quantity;
+          const profitLoss = (price - inv.buyPrice) * inv.quantity;
+
+          // Update table cells
+          document.getElementById(`price-${inv.symbol}`).innerText = "₹" + price.toFixed(2);
+          document.getElementById(`value-${inv.symbol}`).innerText = "₹" + currentValue.toFixed(2);
+          const plElem = document.getElementById(`pl-${inv.symbol}`);
+          plElem.innerText = "₹" + profitLoss.toFixed(2);
+          plElem.className = profitLoss >= 0 ? "profit" : "loss";
+
+          // Add to totals
+          totalCurrent += currentValue;
+          totalPL += profitLoss;
+        }
+      })
+      .catch((err) => console.error("Fetch error for", inv.symbol, err))
+  );
+
+  // After all prices fetched, update summaries
+  Promise.all(fetchPromises).then(() => {
+    // Update Summary cards
+    const currentCard = document.querySelectorAll(".balance-amount")[1];
+    const plCard = document.querySelectorAll(".balance-amount")[2];
+    const livePl = document.getElementById("live-pl-value");
+
+    if (currentCard) currentCard.innerText = "₹" + totalCurrent.toFixed(2);
+    if (plCard) {
+      plCard.innerText = "₹" + totalPL.toFixed(2);
+      plCard.className = totalPL >= 0 ? "balance-amount positive" : "balance-amount negative";
+    }
+    if (livePl) livePl.innerText = "₹" + totalPL.toFixed(2);
+  });
+}
+
+setInterval(updateLivePrices, 2000);
+
+    </script>
+    <script>
+      function fetchIndexPrices() {
+        fetch("/investment/get-index-prices/")
+          .then((res) => res.json())
+          .then((data) => {
+            document.getElementById("nifty50").innerText = data.nifty_50 || "-";
+            document.getElementById("sensex").innerText = data.sensex || "-";
+            document.getElementById("banknifty").innerText = data.bank_nifty || "-";
+            document.getElementById("bankex").innerText = data.bankex || "-";
+          });
+      }
+      setInterval(fetchIndexPrices, 2000);
+      fetchIndexPrices();
+    </script>
+  </body>
+</html>

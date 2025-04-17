@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Investment</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      /* Import Google Fonts */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+      /* Modern Reset & Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #fafafa;
+        min-height: 100vh;
+        color: #1a1a1a;
+        display: flex;
+        overflow-x: hidden;
+      }
+
+      .main-content {
+        flex: 1;
+        width: 100%;
+        padding: 0;
+      }
+
+      /* Header & Search Bar */
+      .top-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background-color: #ffffff;
+        border-bottom: 1px solid #f0f0f0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        position: sticky;
+        top: 0;
+        z-index: 99;
+        background-color: #000;
+        color: white;
+      }
+
+      .page-title {
+        font-weight: 600;
+        font-size: 1.2rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .search-contact {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      .search-input {
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        border: 1px solid #ececec;
+        background-color: #f5f5f5;
+        display: flex;
+        align-items: center;
+        width: 300px;
+      }
+
+      .search-input input {
+        border: none;
+        background: transparent;
+        width: 100%;
+        padding: 0.3rem 0.5rem;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+      }
+
+      .search-btn,
+      .contact-btn {
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        font-family: "Poppins", sans-serif;
+      }
+
+      .search-btn {
+        background-color: transparent;
+        color: #888;
+      }
+
+      .contact-btn {
+        background-color: #000000;
+        color: #ffffff;
+        padding: 0.5rem 1.2rem;
+        font-weight: 500;
+      }
+
+      /* Content Container */
+      .content {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 2rem;
+        padding: 2rem;
+        max-width: 100%;
+      }
+
+      .finance-tracker {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        padding: 2rem;
+      }
+
+      .dashboard-title {
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      /* Form Styles */
+      .form-container {
+        margin-top: 1rem;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #555;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border-radius: 8px;
+        border: 1px solid #ececec;
+        background-color: #f9f9f9;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.9rem;
+        outline: none;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus {
+        border-color: #333;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-help {
+        font-size: 0.8rem;
+        color: #777;
+        margin-top: 0.3rem;
+      }
+
+      .error-message {
+        color: #f44336;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+      }
+
+      /* Button Styles */
+      .button-group {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .submit-btn, .back-btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .submit-btn {
+        background-color: #000000;
+        color: #ffffff;
+      }
+
+      .submit-btn:hover {
+        background-color: #333;
+      }
+
+      .back-btn {
+        background-color: #f5f5f5;
+        color: #333;
+      }
+
+      .back-btn:hover {
+        background-color: #e0e0e0;
+      }
+
+      /* Right sidebar styles */
+      .right-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      /* Help section */
+      .help-section {
+        background: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+        padding: 1.5rem;
+      }
+
+      .help-title {
+        font-weight: 600;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+      }
+
+      .help-item {
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #f0f0f0;
+      }
+
+      .help-item:last-child {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+      }
+
+      .help-item h4 {
+        font-size: 0.95rem;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .help-item p {
+        font-size: 0.85rem;
+        color: #555;
+      }
+
+      /* Tips card */
+      .tips-card {
+        background: linear-gradient(135deg, #f9f9f9, #f0f0f0);
+        border-radius: 12px;
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tips-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .tips-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .tips-list {
+        list-style: none;
+      }
+
+      .tips-list li {
+        margin-bottom: 0.8rem;
+        font-size: 0.85rem;
+        color: #555;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+      }
+
+      .tips-list li i {
+        color: #4caf50;
+        margin-top: 0.2rem;
+      }
+
+      /* Toggle dark mode */
+      .toggle-dark {
+        background: #f5f5f5;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        cursor: pointer;
+        font-family: "Poppins", sans-serif;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-left: auto;
+        margin-bottom: 1rem;
+      }
+
+      /* Dark mode styles */
+      .dark-mode {
+        background-color: #121212;
+        color: #f0f0f0;
+      }
+
+      .dark-mode .finance-tracker,
+      .dark-mode .top-header,
+      .dark-mode .help-section {
+        background: #1e1e1e;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .dark-mode .form-control {
+        background: #2d2d2d;
+        border-color: #3d3d3d;
+        color: #f0f0f0;
+      }
+
+      .dark-mode .form-group label {
+        color: #d0d0d0;
+      }
+
+      .dark-mode .tips-card {
+        background: linear-gradient(135deg, #2d2d2d, #252525);
+      }
+
+      .dark-mode .toggle-dark {
+        background: #2d2d2d;
+        color: #f0f0f0;
+      }
+
+      .dark-mode .back-btn {
+        background: #2d2d2d;
+        color: #f0f0f0;
+      }
+
+      .dark-mode .help-item {
+        border-bottom-color: #333;
+      }
+
+      .dark-mode .tips-list li {
+        color: #ccc;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 1200px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .content {
+          grid-template-columns: 1fr;
+        }
+
+        .search-input {
+          width: 200px;
+        }
+
+        .button-group {
+          flex-direction: column;
+        }
+      }
+      .contact-btn {
+  background: #6b21a8;
+  color: #ffffff;
+}
+
+.contact-btn:hover {
+  background: #5b1b8e;
+}
+    </style>
+  </head>
+  <body>
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <!-- Header -->
+      <div class="top-header">
+        <div class="page-title">
+          Add Investment
+        </div>
+        <div class="search-contact">
+          
+          <a href="{% url 'profile'%}" class="contact-btn" style="text-decoration: none;">Go Back to Profile</a>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="content">
+        <!-- Finance Tracker -->
+        <div class="finance-tracker">
+          <button id="toggle-dark" class="toggle-dark"><i class="fas fa-moon"></i> Toggle Dark Mode</button>
+          
+          <h2 class="dashboard-title">Add New Investment</h2>
+          
+          {% if error %}
+          <div class="error-message">{{ error }}</div>
+          {% endif %}
+          
+          <div class="form-container">
+            <form method="POST">
+              {% csrf_token %}
+              
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="stock_symbol"><i class="fas fa-tag"></i> Stock Symbol</label>
+                  <input 
+                    list="stocklist" 
+                    id="stock"
+                    name="stock_symbol" 
+                    class="form-control" 
+                    placeholder="e.g. INFY" 
+                    required 
+                  />
+                  <datalist id="stocklist">
+                    {% for stock in stocks %}
+                    <option value="{{ stock.symbol }}">{{ stock.company_name }}</option>
+                    {% endfor %}
+                  </datalist>
+                  <div class="form-help">Select from available stocks or enter a symbol</div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="investment_name"><i class="fas fa-bookmark"></i> Investment Name (optional)</label>
+                  <input 
+                    type="text" 
+                    id="investment_name"
+                    name="investment_name" 
+                    class="form-control" 
+                    placeholder="e.g. Long Term Tech Investment"
+                  />
+                  <div class="form-help">Use a name to easily identify this investment</div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="investment_date"><i class="fas fa-calendar-alt"></i> Investment Date</label>
+                  <input 
+                    type="date" 
+                    id="date"
+                    name="investment_date" 
+                    class="form-control" 
+                    required 
+                  />
+                  <div class="form-help">Date when the investment was made</div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="buy_price"><i class="fas fa-rupee-sign"></i> Buy Price</label>
+                  <input 
+                    type="number" 
+                    id="buy_price"
+                    name="buy_price" 
+                    step="0.01" 
+                    class="form-control" 
+                    placeholder="0.00" 
+                    required 
+                  />
+                  <div class="form-help">Price per share at the time of purchase</div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="quantity"><i class="fas fa-sort-amount-up"></i> Quantity</label>
+                  <input 
+                    type="number" 
+                    id="quantity"
+                    name="quantity" 
+                    class="form-control" 
+                    placeholder="0" 
+                    required 
+                  />
+                  <div class="form-help">Number of shares purchased</div>
+                </div>
+              </div>
+              
+              <div class="button-group">
+                <button type="submit" class="submit-btn">
+                  <i class="fas fa-plus-circle"></i> Add Investment
+                </button>
+                <a href="{% url 'dashboard' %}" class="back-btn">
+                  <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Right Sidebar with Help Content -->
+        <div class="right-sidebar">
+          <!-- Help Section -->
+          <div class="help-section">
+            <div class="help-title">Need Help?</div>
+            
+            <div class="help-item">
+              <h4><i class="fas fa-info-circle"></i> Stock Symbol</h4>
+              <p>Enter the stock ticker symbol. For example, INFY for Infosys, TCS for Tata Consultancy Services.</p>
+            </div>
+            
+            <div class="help-item">
+              <h4><i class="fas fa-question-circle"></i> Investment Name</h4>
+              <p>Optional field to help you identify this particular investment (e.g., "Retirement Fund", "Short Term").</p>
+            </div>
+            
+            <div class="help-item">
+              <h4><i class="fas fa-calculator"></i> Buy Price and Quantity</h4>
+              <p>Enter the price per share and the number of shares purchased. The total investment amount will be calculated automatically.</p>
+            </div>
+          </div>
+
+          <!-- Tips Card -->
+          <div class="tips-card">
+            <div class="tips-content">
+              <h3><i class="fas fa-lightbulb"></i> Investment Tips</h3>
+              <ul class="tips-list">
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span>Keep track of your purchase price to accurately monitor performance over time.</span>
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span>Diversify your portfolio by investing in different sectors and asset classes.</span>
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span>Consider the timing of your investments and market conditions.</span>
+                </li>
+                <li>
+                  <i class="fas fa-check-circle"></i>
+                  <span>Regular small investments can yield better results than infrequent large ones.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.getElementById("toggle-dark").addEventListener("click", function () {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem("darkMode", document.body.classList.contains("dark-mode"));
+      });
+    
+      // Load user's preference
+      window.onload = function () {
+  if (localStorage.getItem("darkMode") === "true") {
+    document.body.classList.add("dark-mode");
+  }
+
+  const dateInput = document.getElementById("date");
+  if (dateInput) {
+    dateInput.valueAsDate = new Date();
+  }
+};
+    </script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const stockInput = document.getElementById('stock');
+    const dateInput = document.getElementById('date');
+    const buyPriceInput = document.getElementById('buy_price');
+
+    async function fetchPrice() {
+      const symbol = stockInput.value.trim();
+      const date = dateInput.value;
+
+      if (!symbol || !date) {
+        return;
+      }
+
+      try {
+        const response = await fetch(`/investment/get-historical-price/?symbol=${symbol}&date=${date}`);
+        const data = await response.json();
+
+        if (data.price !== null && data.price !== undefined && !isNaN(data.price)) {
+          buyPriceInput.value = parseFloat(data.price).toFixed(2);
+        } else {
+          buyPriceInput.value = '';
+          buyPriceInput.placeholder = 'Price not found';
+        }
+      } catch (err) {
+        console.error("Error fetching price:", err);
+      }
+    }
+
+    stockInput.addEventListener('change', fetchPrice);
+    dateInput.addEventListener('change', fetchPrice);
+  });
+</script>
+
+    
+  </body> 
+</html>

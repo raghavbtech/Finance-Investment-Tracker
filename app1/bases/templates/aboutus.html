@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'baseproject/aboutus.css' %}" />
+{% endblock %}
+{% block main%}
+    <section class="hero" style="margin-top: 50px;">
+        <div class="hero-content">
+            <h1>Transforming Finance</h1>
+            <p>Empowering you to take control of your financial future through intelligent tracking and insights.</p>
+
+            <div class="quick-forms">
+                <div class="form-card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Quick Calculator</h3>
+                    <div class="form-content">
+                        <input type="number" placeholder="Amount" class="calc-input">
+                        <select class="calc-select">
+                            <option value="savings">Savings Goal</option>
+                            <option value="investment">Investment Return</option>
+                            <option value="loan">Loan Payment</option>
+                        </select>
+                        <button class="calc-button">Calculate</button>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <i class="fas fa-piggy-bank"></i>
+                    <h3>Savings Goal</h3>
+                    <div class="form-content">
+                        <input type="number" placeholder="Target Amount" class="goal-input">
+                        <input type="date" class="goal-date">
+                        <button class="goal-button">Set Goal</button>
+                    </div>
+                </div>
+
+                <div class="form-card">
+                    <i class="fas fa-chart-pie"></i>
+                    <h3>Quick Budget</h3>
+                    <div class="form-content">
+                        <input type="number" placeholder="Monthly Income" class="budget-input">
+                        <div class="budget-sliders">
+                            <label>Savings: <span class="savings-value">20%</span></label>
+                            <input type="range" min="0" max="100" value="20" class="slider">
+                            <label>Expenses: <span class="expenses-value">80%</span></label>
+                            <input type="range" min="0" max="100" value="80" class="slider">
+                        </div>
+                        <button class="goal-button">Set Budget</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <div class="cards-container">
+        <div class="card">
+            <h3>Our Mission</h3>
+            <p>We believe everyone deserves financial freedom. Our mission is to provide simple yet powerful tools that
+                make managing personal finances accessible to all.</p>
+        </div>
+        <div class="card">
+            <h3>Our Vision</h3>
+            <p>To become the world's most trusted personal finance platform by helping millions achieve their financial
+                goals through innovative technology.</p>
+        </div>
+        <div class="card">
+            <h3>Our Values</h3>
+            <p>Security, transparency, and user empowerment are at the core of everything we do. Your financial journey
+                is our top priority.</p>
+        </div>
+    </div>
+
+    
+
+    <div class="feature-grid">
+        <div class="feature-item">
+            <i class="fas fa-chart-line feature-icon"></i>
+            <h3>Smart Analytics</h3>
+            <p>Advanced insights into your spending patterns and financial habits.</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-shield-alt feature-icon"></i>
+            <h3>Bank-Level Security</h3>
+            <p>Your data is protected with state-of-the-art encryption and security measures.</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-mobile-alt feature-icon"></i>
+            <h3>Easy to Use</h3>
+            <p>Intuitive interface designed for both beginners and advanced users.</p>
+        </div>
+        <div class="feature-item">
+            <i class="fas fa-headset feature-icon"></i>
+            <h3>24/7 Support</h3>
+            <p>Our dedicated team is always here to help you with any questions.</p>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number">100K+</div>
+            <div class="stat-label">Active Users</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">$1M+</div>
+            <div class="stat-label">Tracked Monthly</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">98%</div>
+            <div class="stat-label">Satisfaction Rate</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">Customer Support</div>
+        </div>
+    </div>
+
+
+
+{% block extra_js %}
+
+<script src="{% static 'scripts/home.js' %}"></script>
+<script src="{% static 'scripts/aboutus.js' %}"></script>
+{% endblock %}
+{% endblock %}
+
+
+
+
+
+
+

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css%}
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="{% static 'baseproject/signup.css' %}" />
+{% endblock %}
+{% block main %}
+<div class="container" style="margin-top: 50px;">
+    <div class="signup-section">
+        <h2>Create Account</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">
+                <span>Register</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+        <p class="login-link">Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+
+    <div class="features-section">
+        <div class="feature-card">
+            <h3><i class="fas fa-chart-line"></i> Investment Growth</h3>
+            <div class="chart-container">
+                <canvas id="investmentChart"></canvas>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3><i class="fas fa-wallet"></i> Financial Benefits</h3>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h4>Average Returns</h4>
+                    <p>12.5%</p>
+                    <span class="trend positive">↑ 2.3%</span>
+                </div>
+                <div class="stat-item">
+                    <h4>User Satisfaction</h4>
+                    <p>98%</p>
+                    <span class="trend positive">↑ 5%</span>
+                </div>
+                <div class="stat-item">
+                    <h4>Active Users</h4>
+                    <p>50K+</p>
+                    <span class="trend positive">↑ 12%</span>
+                </div>
+                <div class="stat-item">
+                    <h4>Success Rate</h4>
+                    <p>95%</p>
+                    <span class="trend positive">↑ 3%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3><i class="fas fa-shield-alt"></i> Security Features</h3>
+            <div class="chart-container">
+                <canvas id="securityChart"></canvas>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3><i class="fas fa-gift"></i> Premium Features</h3>
+            <div class="benefits-list">
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Real-time Market Analytics</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Portfolio Optimization</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>AI-Powered Insights</span>
+                </div>
+                <div class="benefit-item">
+                    <i class="fas fa-check-circle"></i>
+                    <span>24/7 Expert Support</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<script src="{% static 'scripts/signup.js' %}"></script>
+{% endblock %}
+
+{% endblock %}

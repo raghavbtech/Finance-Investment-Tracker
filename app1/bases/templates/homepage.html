@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'baseproject/homepage.css' %}" />{% endblock %}
+{% block main %}
+
+ <!-- Main Section -->
+ <section class="main-content">
+    <div class="hero-section">
+        <h1>Smart Financial Management</h1>
+        <p>Take control of your finances with our comprehensive tracking tools</p>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Expense Tracking</h3>
+            <p>Monitor your daily spending and categorize expenses automatically</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-piggy-bank"></i>
+            <h3>Savings Goals</h3>
+            <p>Set and track your savings goals with visual progress indicators</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-wallet"></i>
+            <h3>Budget Planning</h3>
+            <p>Create custom budgets and receive alerts when nearing limits</p>
+        </div>
+        <div class="feature-card">
+            <i class="fas fa-chart-pie"></i>
+            <h3>Investment Tracking</h3>
+            <p>Monitor your investment portfolio and track returns</p>
+        </div>
+    </div>
+
+
+
+
+
+
+    <section class="home-charts">
+        <div class="charts-overview">
+            <div class="mini-chart-container">
+                <h4>Weekly Growth</h4>
+                <div class="chart-wrapper">
+                    <canvas id="miniGrowthChart"></canvas>
+                </div>
+            </div>
+            <div class="mini-chart-container">
+                <h4>User Activity</h4>
+                <div class="chart-wrapper">
+                    <canvas id="miniUserChart"></canvas>
+                </div>
+            </div>
+            <div class="mini-chart-container">
+                <h4>Success Rate</h4>
+                <div class="chart-wrapper">
+                    <canvas id="miniSuccessChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+
+    <div class="stats-section">
+        <div class="stat-card">
+            <h4>Active Users</h4>
+            <span class="stat-number" data-target="50000">0</span>
+            <p>Trusted by thousands</p>
+        </div>
+        <div class="stat-card">
+            <h4>Transactions Tracked</h4>
+            <span class="stat-number" data-target="1000000">0</span>
+            <p>Processed securely</p>
+        </div>
+        <div class="stat-card">
+            <h4>Savings Achieved</h4>
+            <span class="stat-number" data-target="25">0</span>
+            <p>Average % saved by users</p>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2>Ready to Start Your Financial Journey?</h2>
+        <p>Join thousands of users who have already transformed their financial lives</p>
+        <div class="cta-buttons">
+            <a href="{% url 'login' %}" class="cta-primary">Get Started</a>
+            <a href="{% url 'about' %}" class="cta-secondary">Learn More</a>
+        </div>
+    </div>
+</section>
+{% block extra_js %}
+<script src="{% static 'scripts/home.js' %}"></script>{% endblock %}
+
+{% endblock %}

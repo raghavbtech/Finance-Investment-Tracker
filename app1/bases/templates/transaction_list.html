@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Transactions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap');
+        
+        :root {
+            --bg: #0c121f;
+            --card-bg: #1a2332;
+            --text-color: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --neon-blue: #00f7ff;
+            --neon-purple: #b24bff;
+            --neon-pink: #ff2e88;
+            --neon-green: #4ecca3;
+            --gradient-1: linear-gradient(45deg, #00f7ff, #b24bff);
+            --gradient-2: linear-gradient(45deg, #ff2e88, #4ecca3);
+            --glass-bg: rgba(26, 35, 50, 0.8);
+        }
+
+        body {
+            background: var(--bg);
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 247, 255, 0.1) 0%, transparent 20%),
+                             radial-gradient(circle at 90% 80%, rgba(178, 75, 255, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
+            font-family: 'Lexend', sans-serif;
+            color: var(--text-color);
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        /* Header Section */
+        .d-flex {
+            background: var(--glass-bg);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            font-family: 'Syncopate', sans-serif;
+            color: var(--neon-blue);
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+        }
+
+        /* Add Transaction Button */
+        .btn-primary {
+            background: var(--gradient-1);
+            border: none;
+            padding: 0.7rem 1.5rem;
+            font-family: 'Lexend', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            border-radius: 8px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(0, 247, 255, 0.4);
+        }
+
+        /* Total Amount Card */
+        .mb-3 {
+            background: var(--glass-bg);
+            padding: 1.2rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(78, 204, 163, 0.3);
+            margin-bottom: 1.5rem !important;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .mb-3:hover {
+            border-color: var(--neon-green);
+            box-shadow: 0 8px 25px rgba(78, 204, 163, 0.2);
+        }
+
+        h4 {
+            color: var(--neon-green);
+            font-family: 'Lexend', sans-serif;
+            font-size: 1.3rem;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(78, 204, 163, 0.3);
+            font-weight: 600;
+        }
+
+        /* Table Container */
+        .table-responsive {
+            background: var(--glass-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Table Styling */
+        .table {
+            color: var(--text-color);
+            margin-bottom: 0;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        .table thead th {
+            background: transparent;
+            color: var(--neon-blue);
+            font-family: 'Lexend', sans-serif;
+            font-weight: 600;
+            padding: 1rem;
+            border-bottom: 2px solid var(--neon-blue);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .table tbody td {
+            padding: 1rem;
+            border: none;
+            vertical-align: middle;
+        }
+
+        .table-striped>tbody>tr {
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .table-striped>tbody>tr:nth-of-type(odd)>* {
+            background: var(--card-bg);
+        }
+
+        .table-striped>tbody>tr:nth-of-type(even)>* {
+            background: rgba(26, 35, 50, 0.95);
+        }
+
+        .table-striped>tbody>tr>td:first-child {
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+        }
+
+        .table-striped>tbody>tr>td:last-child {
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+        }
+
+        /* Table Row Hover Effect */
+        .table tbody tr:hover td {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Category and Amount Columns */
+        .table td:first-child {
+            color: var(--neon-purple);
+            font-weight: 500;
+        }
+
+        .table td:nth-child(2) {
+            color: var(--neon-green);
+            font-weight: 600;
+        }
+
+        /* Action Buttons */
+        .btn-sm {
+            font-family: 'Lexend', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.7rem;
+            padding: 0.4rem 0.9rem;
+            margin: 0.2rem;
+            border: none;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        /* Edit Button */
+        .btn-warning {
+            background: transparent;
+            border: 1.5px solid var(--neon-purple);
+            color: var(--neon-purple);
+        }
+
+        .btn-warning:hover {
+            background: var(--gradient-1);
+            color: var(--text-color);
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(178, 75, 255, 0.3);
+        }
+
+        /* Delete Button */
+        .btn-danger {
+            background: transparent;
+            border: 1.5px solid var(--neon-pink);
+            color: var(--neon-pink);
+        }
+
+        .btn-danger:hover {
+            background: var(--gradient-2);
+            color: var(--text-color);
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(255, 46, 136, 0.3);
+        }
+
+        /* Alert Messages */
+        .alert {
+            background: var(--glass-bg);
+            border: none;
+            color: var(--text-color);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .alert-success {
+            border-left: 4px solid var(--neon-green);
+            box-shadow: 0 0 20px rgba(78, 204, 163, 0.2);
+        }
+
+        .alert-danger {
+            border-left: 4px solid var(--neon-pink);
+            box-shadow: 0 0 20px rgba(255, 46, 136, 0.2);
+        }
+
+        /* Empty State */
+        .text-center {
+            color: var(--text-secondary);
+            font-style: italic;
+            padding: 2rem !important;
+        }
+
+        /* Graph Container */
+        .graph-container {
+            background: var(--glass-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            height: 220px;
+        }
+
+        .graph-container h5 {
+            font-family: 'Lexend', sans-serif;
+            color: var(--neon-blue);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+            font-weight: 600;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 150px !important;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .d-flex {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .btn-primary {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+
+            .table-responsive {
+                padding: 1rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .btn-sm {
+                padding: 0.3rem 0.7rem;
+                font-size: 0.65rem;
+            }
+
+            .graph-container {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>My Transactions</h2>
+            <div>
+                <a href="{% url 'transaction_create' %}" class="btn btn-primary">Add Transaction</a>
+                <a href="{% url 'profile' %}" class="btn btn-primary">BACK</a>
+            </div>
+        </div>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="mb-3">
+            <h4>Total Amount: ${{ total_amount|floatformat:2 }}</h4>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.category }}</td>
+                        <td>${{ transaction.amount|floatformat:2 }}</td>
+                        <td>{{ transaction.description|default:"-" }}</td>
+                        <td>
+                            <a href="{% url 'transaction_update' transaction.pk %}"
+                                class="btn btn-sm btn-warning">Edit</a>
+                            <a href="{% url 'transaction_delete' transaction.pk %}"
+                                class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center">No transactions found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Small Transaction Graph -->
+        <div class="graph-container">
+            <h5>Transaction Overview</h5>
+            <canvas id="transactionChart"></canvas>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sample data - this would normally be populated from your backend
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('transactionChart').getContext('2d');
+            
+            // Create gradient for the line
+            const gradient = ctx.createLinearGradient(0, 0, 0, 150);
+            gradient.addColorStop(0, 'rgba(0, 247, 255, 0.5)');
+            gradient.addColorStop(1, 'rgba(0, 247, 255, 0.1)');
+            
+            // Create gradient for the bar
+            const barGradient = ctx.createLinearGradient(0, 0, 0, 150);
+            barGradient.addColorStop(0, 'rgba(178, 75, 255, 0.7)');
+            barGradient.addColorStop(1, 'rgba(178, 75, 255, 0.3)');
+
+            // Sample data (would be populated from backend)
+            const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+            const expenseData = [500, 650, 420, 580, 490, 600];
+            
+            const chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            type: 'line',
+                            label: 'Trend',
+                            data: expenseData,
+                            borderColor: '#00f7ff',
+                            backgroundColor: gradient,
+                            tension: 0.4,
+                            borderWidth: 2,
+                            pointBackgroundColor: '#00f7ff',
+                            pointBorderColor: '#ffffff',
+                            pointRadius: 4,
+                            pointHoverRadius: 6,
+                            fill: true
+                        },
+                        {
+                            type: 'bar',
+                            label: 'Amount',
+                            data: expenseData,
+                            backgroundColor: barGradient,
+                            borderRadius: 6,
+                            barPercentage: 0.5
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(26, 35, 50, 0.9)',
+                            titleColor: '#00f7ff',
+                            bodyColor: '#ffffff',
+                            borderColor: 'rgba(255, 255, 255, 0.1)',
+                            borderWidth: 1,
+                            padding: 10,
+                            displayColors: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)'
+                            }
+                        },
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.7)',
+                                callback: function(value) {
+                                    return '$' + value;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

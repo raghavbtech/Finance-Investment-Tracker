@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+    <style>
+        :root {
+            --bg: #0c121f;
+            --card-bg: #1a2332;
+            --text-color: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --neon-blue: #00f7ff;
+            --neon-purple: #b24bff;
+            --neon-pink: #ff2e88;
+            --neon-green: #4ecca3;
+            --neon-orange: #ff9050;
+            --glass-bg: rgba(26, 35, 50, 0.8);
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text-color);
+        }
+
+        .calculator-card,
+        .chart-card {
+            background: var(--glass-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        h3 {
+            color: var(--neon-blue);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            color: var(--neon-purple);
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            background: var(--card-bg) !important;
+            border: 1px solid var(--border-color);
+            color: var(--text-color) !important;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #00f7ff, #b24bff);
+            border: none;
+            width: 100%;
+        }
+
+        .result-box {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--neon-green);
+            margin-top: 1rem;
+            color: var(--neon-green);
+            text-align: center;
+            opacity: 0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .result-box.show {
+            opacity: 1;
+        }
+
+        .chart-container {
+            height: 200px;
+            position: relative;
+        }
+
+        .market-data-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .market-data-value.up {
+            color: var(--neon-green);
+        }
+
+        .market-data-value.down {
+            color: var(--neon-pink);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+
+        footer {
+            margin-top: 4rem;
+            padding: 2rem;
+            text-align: center;
+            background: var(--card-bg);
+            color: rgba(255, 255, 255, 0.7);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center text-info mb-4">Financial Dashboard</h1>
+
+        <div class="row">
+            <!-- EMI Calculator -->
+            <div class="col-md-6 mb-3">
+                <div class="calculator-card">
+                    <h3>EMI Calculator</h3>
+                    <div class="form-group mb-3">
+                        <label>Loan Amount (₹)</label>
+                        <input type="number" id="loanAmount" class="form-control" value="500000">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Interest Rate (%)</label>
+                        <input type="number" id="interestRate" class="form-control" value="8.5">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Loan Term (Years)</label>
+                        <input type="number" id="loanTerm" class="form-control" value="5">
+                    </div>
+                    <button onclick="calculateEMI()" class="btn btn-primary mb-3">Calculate EMI</button>
+                    <div id="emiResult" class="result-box"></div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Loan Breakdown</h3>
+                    <div id="emiChart" class="chart-container"></div>
+                </div>
+            </div>
+
+            <!-- Investment Calculator -->
+            <div class="col-md-6 mb-3">
+                <div class="calculator-card">
+                    <h3>Investment Calculator</h3>
+                    <div class="form-group mb-3">
+                        <label>Principal Amount (₹)</label>
+                        <input type="number" id="principalAmount" class="form-control" value="100000">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Annual Return (%)</label>
+                        <input type="number" id="returnRate" class="form-control" value="12">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label>Time Period (Years)</label>
+                        <input type="number" id="timePeriod" class="form-control" value="10">
+                    </div>
+                    <button onclick="calculateInvestment()" class="btn btn-primary mb-3">Calculate Returns</button>
+                    <div id="investmentResult" class="result-box"></div>
+                </div>
+
+                <div class="chart-card">
+                    <h3>Investment Growth</h3>
+                    <div id="investmentChart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market Data -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="chart-card">
+                    <h3>Market Overview</h3>
+                    <div id="marketData">
+                        <div class="market-data-item">
+                            <span>NIFTY 50</span>
+                            <span class="market-data-value up">24,350.75 (+0.87%)</span>
+                        </div>
+                        <div class="market-data-item">
+                            <span>SENSEX</span>
+                            <span class="market-data-value up">80,450.32 (+0.92%)</span>
+                        </div>
+                        <div class="market-data-item">
+                            <span>GOLD (10g)</span>
+                            <span class="market-data-value up">₹65,850 (+1.2%)</span>
+                        </div>
+                        <div class="market-data-item">
+                            <span>RBI Repo Rate</span>
+                            <span class="market-data-value">6.25%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Run calculations on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            calculateEMI();
+            calculateInvestment();
+        });
+
+        // EMI Calculator
+        function calculateEMI() {
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value) / 100 / 12;
+            const loanTerm = parseFloat(document.getElementById('loanTerm').value) * 12;
+
+            if (!loanAmount || !interestRate || !loanTerm) {
+                showResult('emiResult', 'Please fill all fields');
+                return;
+            }
+
+            const emi = (loanAmount * interestRate * Math.pow(1 + interestRate, loanTerm)) /
+                (Math.pow(1 + interestRate, loanTerm) - 1);
+            const totalPayment = emi * loanTerm;
+            const totalInterest = totalPayment - loanAmount;
+
+            showResult('emiResult', `
+                EMI: ₹${emi.toFixed(2)}<br>
+                Total Interest: ₹${totalInterest.toFixed(2)}<br>
+                Total Payment: ₹${totalPayment.toFixed(2)}
+            `);
+
+            // Update chart
+            updateEMIChart(loanAmount, totalInterest);
+        }
+
+        // Investment Calculator
+        function calculateInvestment() {
+            const principal = parseFloat(document.getElementById('principalAmount').value);
+            const rate = parseFloat(document.getElementById('returnRate').value) / 100;
+            const time = parseFloat(document.getElementById('timePeriod').value);
+
+            if (!principal || !rate || !time) {
+                showResult('investmentResult', 'Please fill all fields');
+                return;
+            }
+
+            const amount = principal * Math.pow(1 + rate, time);
+            const interest = amount - principal;
+
+            showResult('investmentResult', `
+                Final Amount: ₹${amount.toFixed(2)}<br>
+                Total Returns: ₹${interest.toFixed(2)}
+            `);
+
+            // Update chart
+            updateInvestmentChart(principal, rate, time);
+        }
+
+        // Show result with animation
+        function showResult(elementId, message) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = message;
+            element.classList.add('show');
+            element.style.animation = 'fadeIn 0.5s ease-in-out';
+        }
+
+        // Update EMI Chart
+        function updateEMIChart(principal, interest) {
+            const data = [
+                { label: 'Principal', value: principal, color: '#00f7ff' },
+                { label: 'Interest', value: interest, color: '#b24bff' }
+            ];
+
+            // Clear previous chart
+            document.getElementById('emiChart').innerHTML = '';
+
+            const width = document.getElementById('emiChart').clientWidth;
+            const height = document.getElementById('emiChart').clientHeight;
+            const radius = Math.min(width, height) / 2 * 0.8;
+
+            const svg = d3.select('#emiChart')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height)
+                .append('g')
+                .attr('transform', `translate(${width / 2}, ${height / 2})`);
+
+            const arc = d3.arc()
+                .innerRadius(radius * 0.6)
+                .outerRadius(radius);
+
+            const pie = d3.pie()
+                .value(d => d.value)
+                .sort(null);
+
+            // Add donut chart segments
+            svg.selectAll('path')
+                .data(pie(data))
+                .enter()
+                .append('path')
+                .attr('d', arc)
+                .attr('fill', d => d.data.color)
+                .attr('stroke', '#0c121f')
+                .attr('stroke-width', 2);
+
+            // Add center text
+            svg.append('text')
+                .attr('text-anchor', 'middle')
+                .attr('dy', '0.35em')
+                .style('font-size', '14px')
+                .style('fill', '#ffffff')
+                .text(`₹${(principal + interest).toLocaleString()}`);
+
+            // Add legend
+            svg.selectAll('dots')
+                .data(data)
+                .enter()
+                .append('circle')
+                .attr('cx', -radius + 10)
+                .attr('cy', (d, i) => -radius + 20 + i * 20)
+                .attr('r', 5)
+                .style('fill', d => d.color);
+
+            svg.selectAll('labels')
+                .data(data)
+                .enter()
+                .append('text')
+                .attr('x', -radius + 20)
+                .attr('y', (d, i) => -radius + 20 + i * 20)
+                .attr('dy', '0.35em')
+                .style('fill', '#ffffff')
+                .style('font-size', '10px')
+                .text(d => `${d.label}: ₹${d.value.toLocaleString()}`);
+        }
+
+        // Update Investment Chart
+        function updateInvestmentChart(principal, rate, years) {
+            // Clear previous chart
+            document.getElementById('investmentChart').innerHTML = '';
+
+            const width = document.getElementById('investmentChart').clientWidth;
+            const height = document.getElementById('investmentChart').clientHeight;
+            const margin = { top: 10, right: 30, bottom: 30, left: 50 };
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+
+            // Generate yearly data
+            const data = [];
+            for (let i = 0; i <= years; i++) {
+                const amount = principal * Math.pow(1 + rate, i);
+                data.push({
+                    year: i,
+                    amount: amount
+                });
+            }
+
+            const svg = d3.select('#investmentChart')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height)
+                .append('g')
+                .attr('transform', `translate(${margin.left}, ${margin.top})`);
+
+            // X axis
+            const x = d3.scaleLinear()
+                .domain([0, years])
+                .range([0, chartWidth]);
+
+            svg.append('g')
+                .attr('transform', `translate(0, ${chartHeight})`)
+                .call(d3.axisBottom(x).ticks(5))
+                .selectAll('text')
+                .style('fill', '#ffffff');
+
+            // Y axis
+            const maxAmount = data[data.length - 1].amount;
+            const y = d3.scaleLinear()
+                .domain([0, maxAmount * 1.1])
+                .range([chartHeight, 0]);
+
+            svg.append('g')
+                .call(d3.axisLeft(y).ticks(5).tickFormat(d => `${(d / 1000).toFixed(0)}k`))
+                .selectAll('text')
+                .style('fill', '#ffffff');
+
+            // Add gradient area
+            svg.append('path')
+                .datum(data)
+                .attr('fill', '#4ecca3')
+                .attr('fill-opacity', 0.3)
+                .attr('stroke', 'none')
+                .attr('d', d3.area()
+                    .x(d => x(d.year))
+                    .y0(chartHeight)
+                    .y1(d => y(d.amount))
+                );
+
+            // Add line
+            svg.append('path')
+                .datum(data)
+                .attr('fill', 'none')
+                .attr('stroke', '#4ecca3')
+                .attr('stroke-width', 2)
+                .attr('d', d3.line()
+                    .x(d => x(d.year))
+                    .y(d => y(d.amount))
+                    .curve(d3.curveMonotoneX)
+                );
+
+            // Add dots for each year
+            svg.selectAll('circle')
+                .data(data)
+                .enter()
+                .append('circle')
+                .attr('cx', d => x(d.year))
+                .attr('cy', d => y(d.amount))
+                .attr('r', 3)
+                .attr('fill', '#4ecca3');
+        }
+    </script>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 FinanceTracker. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

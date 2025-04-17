@@ -1,0 +1,116 @@
+<!-- {% extends "base.html"%}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    {% block main %}
+    <div class="container">
+        <div class="login-section">
+            <h2>Welcome Back</h2>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">
+                    <span>Login</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+            <p class="signup-link">Don't have an account? <a href="{% url 'signup' %}">Register here</a></p>
+        </div>
+
+        <div class="features-section">
+            <div class="feature-card">
+                <h3><i class="fas fa-chart-pie"></i> Market Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="marketChart"></canvas>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <h3><i class="fas fa-trophy"></i> Platform Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-item"><h4>Daily Trades</h4><p>10K+</p></div>
+                    <div class="stat-item"><h4>Active Users</h4><p>50K+</p></div>
+                    <div class="stat-item"><h4>Success Rate</h4><p>97%</p></div>
+                    <div class="stat-item"><h4>Global Reach</h4><p>120+</p></div>
+                </div>
+            </div>
+
+            <div class="feature-card">
+                <h3><i class="fas fa-clock"></i> Trading Activity</h3>
+                <div class="chart-container">
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            new Chart(document.getElementById('marketChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Stocks', 'Crypto', 'Forex', 'Commodities'],
+                    datasets: [{
+                        data: [40, 25, 20, 15],
+                        backgroundColor: ['#ff2e88', '#00f7ff', '#4ecca3', '#b24bff']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: 'rgba(255, 255, 255, 0.7)' }
+                        }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('activityChart').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                    datasets: [{
+                        label: 'Trading Volume',
+                        data: [1200, 1900, 1500, 2100, 1800],
+                        backgroundColor: '#ff2e88',
+                        borderRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: { color: 'rgba(255, 255, 255, 0.7)' }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: 'rgba(255, 255, 255, 0.7)' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: 'rgba(255, 255, 255, 0.7)' }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html> -->

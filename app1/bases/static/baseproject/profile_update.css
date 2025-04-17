@@ -1,0 +1,376 @@
+:root {
+    --bg: #0c121f; /* Restored original background color */
+    --card-bg: #1a2332; /* Restored original card background */
+    --text-color: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --neon-blue: #00f7ff;
+    --neon-purple: #b24bff;
+    --neon-pink: #ff2e88;
+    --neon-green: #4ecca3;
+    --gradient-1: linear-gradient(45deg, #00f7ff, #b24bff);
+    --gradient-2: linear-gradient(45deg, #ff2e88, #4ecca3);
+    --glass-bg: rgba(26, 35, 50, 0.8);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Lexend', sans-serif;
+}
+
+body {
+    background: var(--bg);
+    min-height: 100vh;
+    color: var(--text-color);
+    line-height: 1.6;
+    padding: 2rem 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+}
+
+.update-card {
+    background: var(--glass-bg);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s ease;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+}
+
+.update-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 247, 255, 0.2);
+}
+
+.card-content {
+    padding: 2.5rem;
+    position: relative;
+    z-index: 2;
+}
+
+.title {
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    background: var(--gradient-1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 1px;
+}
+
+.neon-line {
+    height: 3px;
+    background: var(--gradient-1);
+    margin: 0 auto 2rem;
+    width: 80px;
+    border-radius: 3px;
+}
+
+.profile-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-group {
+    position: relative;
+}
+
+.neon-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--neon-blue);
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-color);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 0 3px rgba(0, 247, 255, 0.2);
+}
+
+.error-message {
+    color: var(--neon-pink);
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    display: block;
+    padding-left: 0.5rem;
+    border-left: 2px solid var(--neon-pink);
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-save {
+    padding: 1rem 2rem;
+    background: var(--gradient-1);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 247, 255, 0.3);
+}
+
+.btn-cancel {
+    padding: 1rem 2rem;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.decoration-cards {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.deco-card {
+    position: absolute;
+    border-radius: 16px;
+    background: rgba(0, 247, 255, 0.1);
+    border: 1px solid rgba(0, 247, 255, 0.2);
+    backdrop-filter: blur(5px);
+    animation: float 6s infinite ease-in-out;
+}
+
+.card1 {
+    width: 150px;
+    height: 150px;
+    top: 10%;
+    left: -75px;
+    animation-delay: 0s;
+    transform: rotate(-15deg);
+}
+
+.card2 {
+    width: 120px;
+    height: 120px;
+    bottom: 20%;
+    right: -60px;
+    animation-delay: 1s;
+    background: rgba(255, 46, 136, 0.1);
+    border: 1px solid rgba(255, 46, 136, 0.2);
+    transform: rotate(10deg);
+}
+
+.card3 {
+    width: 80px;
+    height: 80px;
+    bottom: -40px;
+    left: 30%;
+    animation-delay: 2s;
+    background: rgba(78, 204, 163, 0.1);
+    border: 1px solid rgba(78, 204, 163, 0.2);
+    transform: rotate(25deg);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(var(--rotation, 0deg)); }
+    50% { transform: translateY(-20px) rotate(var(--rotation, 0deg)); }
+}
+
+/* Form field highlight effect */
+.form-group::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-1);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.form-group:focus-within::after {
+    width: 100%;
+}
+
+/* Custom checkbox/radio styling */
+input[type="checkbox"], input[type="radio"] {
+    width: auto;
+    margin-right: 8px;
+    accent-color: var(--neon-blue);
+}
+
+/* Loading indicator */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s ease-in-out infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Form field focus animations */
+.form-group:focus-within .neon-label {
+    color: var(--neon-purple);
+    transform: translateY(-5px);
+}
+
+/* Input placeholder */
+::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* Progress indicator at top of form */
+.progress-container {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 2rem;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 33%;
+    background: var(--gradient-1);
+    transition: width 0.3s ease;
+}
+
+/* Charts section styles */
+.charts-section {
+    margin-top: 3rem;
+    padding: 2rem 0;
+}
+
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-card {
+    background: var(--glass-bg);
+    border-radius: 20px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.chart-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 247, 255, 0.2);
+}
+
+.chart-title {
+    font-size: 1.2rem;
+    color: var(--neon-blue);
+    margin-bottom: 1rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.chart-wrapper {
+    width: 100%;
+    height: 250px;
+    position: relative;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 1.8rem;
+    background: var(--gradient-2);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.section-title::after {
+    content: '';
+    height: 3px;
+    width: 60px;
+    background: var(--gradient-2);
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 3px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .card-content {
+        padding: 1.5rem;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .charts-container {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,113 @@
+:root {
+    --bg: #0c121f;
+    --card-bg: #1a2332;
+    --text-color: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --neon-blue: #00f7ff;
+    --neon-purple: #b24bff;
+    --neon-pink: #ff2e88;
+    --neon-green: #4ecca3;
+    --neon-orange: #ff9050;
+    --glass-bg: rgba(26, 35, 50, 0.8);
+}
+
+body {
+    background: var(--bg);
+    color: var(--text-color);
+}
+
+.calculator-card,
+.chart-card {
+    background: var(--glass-bg);
+    border-radius: 15px;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    margin-bottom: 1rem;
+}
+
+h3 {
+    color: var(--neon-blue);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+label {
+    color: var(--neon-purple);
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border-color);
+    color: var(--text-color) !important;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #00f7ff, #b24bff);
+    border: none;
+    width: 100%;
+}
+
+.result-box {
+    background: var(--card-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--neon-green);
+    margin-top: 1rem;
+    color: var(--neon-green);
+    text-align: center;
+    opacity: 0;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-box.show {
+    opacity: 1;
+}
+
+.chart-container {
+    height: 200px;
+    position: relative;
+}
+
+.market-data-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.market-data-value.up {
+    color: var(--neon-green);
+}
+
+.market-data-value.down {
+    color: var(--neon-pink);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+footer {
+    margin-top: 4rem;
+    padding: 2rem;
+    text-align: center;
+    background: var(--card-bg);
+    color: rgba(255, 255, 255, 0.7);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

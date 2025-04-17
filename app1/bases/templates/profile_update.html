@@ -1,0 +1,99 @@
+
+
+
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css%}
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link rel="stylesheet" href="{% static 'baseproject/profile_update.css' %}" />
+{% endblock %}
+{% block main %}
+<div class="container" style="margin-top: 50px;">
+    <!-- Profile Update Form -->
+    <div class="update-card animate__animated animate__fadeIn">
+        <div class="card-content">
+            <h2 class="title animate__animated animate__fadeInDown">UPDATE PROFILE</h2>
+            <div class="neon-line animate__animated animate__fadeIn animate__delay-1s"></div>
+            
+            <div class="progress-container">
+                <div class="progress-bar"></div>
+            </div>
+            
+            <form method="post" class="profile-form">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group animate__animated animate__fadeInUp animate__delay-1s">
+                    <label for="{{ field.id_for_label }}" class="neon-label">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <div class="error-message animate__animated animate__headShake">
+                        {{ field.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                
+                <div class="button-group animate__animated animate__fadeInUp animate__delay-2s">
+                    <button type="submit" class="btn-save">
+                        <span class="save-text">Save Changes</span>
+                    </button>
+                    <a href="{% url 'profile' %}" class="btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Decorative Cards -->
+    <div class="decoration-cards">
+        <div class="deco-card card1"></div>
+        <div class="deco-card card2"></div>
+        <div class="deco-card card3"></div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="charts-section animate__animated animate__fadeIn animate__delay-2s">
+        <h3 class="section-title">PROFILE ANALYTICS</h3>
+        
+        <div class="charts-container">
+            <!-- Activity Chart -->
+            <div class="chart-card animate__animated animate__fadeIn animate__delay-3s">
+                <h4 class="chart-title">Activity Overview</h4>
+                <div class="chart-wrapper">
+                    <canvas id="activityChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Progress Chart -->
+            <div class="chart-card animate__animated animate__fadeIn animate__delay-3s">
+                <h4 class="chart-title">Completion Progress</h4>
+                <div class="chart-wrapper">
+                    <canvas id="completionChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Performance Chart -->
+            <div class="chart-card animate__animated animate__fadeIn animate__delay-4s">
+                <h4 class="chart-title">Performance Metrics</h4>
+                <div class="chart-wrapper">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+            </div>
+            
+            <!-- Growth Chart -->
+            <div class="chart-card animate__animated animate__fadeIn animate__delay-4s">
+                <h4 class="chart-title">Growth Over Time</h4>
+                <div class="chart-wrapper">
+                    <canvas id="growthChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<script src="{% static 'scripts/profile_update.js' %}"></script>
+{% endblock %}
+
+{% endblock %}

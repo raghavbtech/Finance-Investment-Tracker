@@ -1,0 +1,164 @@
+:root {
+  --dark-bg: #0c121f;
+  --card-bg: #1a2332;
+  --text-color: #ffffff;
+  --neon-green: #00ff88;
+  --neon-cyan: #00e5ff;
+  --gradient-1: linear-gradient(45deg, #00ff88, #00e5ff);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* font-family: 'Space Grotesk', sans-serif; */
+font-family: 'Outfit', sans-serif;
+  background-color: var(--dark-bg);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+  background: var(--card-bg);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  background: var(--gradient-1);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+
+.theme-toggle {
+  background: transparent;
+  border: 2px solid var(--neon-cyan);
+  color: var(--neon-cyan);
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.contact-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.contact-left,
+.contact-right {
+  flex: 1 1 45%;
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+}
+
+.contact-left h2,
+.contact-right h2 {
+  margin-bottom: 1rem;
+  color: var(--neon-cyan);
+}
+
+.contact-left p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: white;
+  border-radius: 8px;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.contact-right button {
+  padding: 0.8rem 1.5rem;
+  background: var(--neon-cyan);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.charts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.chart-box {
+  flex: 1 1 45%;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 12px;
+}
+
+.chart-box {
+flex: 1 1 45%;
+background: var(--card-bg);
+padding: 1.5rem;
+border-radius: 12px;
+height: 350px; /* FIXED HEIGHT */
+display: flex;
+flex-direction: column;
+justify-content: center;
+}
+
+canvas {
+flex: 1;
+width: 100% !important;
+height: 100% !important;
+}
+
+
+
+
+
+
+@media (max-width: 768px) {
+  .contact-wrapper {
+    flex-direction: column;
+  }
+
+  .charts {
+    flex-direction: column;
+  }
+}

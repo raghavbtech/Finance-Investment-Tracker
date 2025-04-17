@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: sans-serif; font-size: 12px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 6px;
+            border: 1px solid #999;
+            text-align: center;
+        }
+        th {
+            background-color: #f3f3f3;
+        }
+    </style>
+</head>
+<body>
+    <h2>Investment Summary - {{ user.username }}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Stock</th>
+                <th>Buy Price</th>
+                <th>Current Price</th>
+                <th>Quantity</th>
+                <th>Date</th>
+                <th>Invested</th>
+                <th>Current</th>
+                <th>Profit/Loss</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inv in investments %}
+            <tr>
+                <td>{{ inv.investment_id }}</td>
+                <td>{{ inv.investment_name }}</td>
+                <td>{{ inv.stock.symbol }}</td>
+                <td>{{ inv.buy_price|floatformat:2 }}</td>
+                <td>{{ inv.current_price_display|floatformat:2 }}</td>
+                <td>{{ inv.investment_quantity }}</td>
+                <td>{{ inv.investment_date|date:"Y-m-d" }}</td>
+                <td>{{ inv.invested_value|floatformat:2 }}</td>
+                <td>{{ inv.current_value|floatformat:2 }}</td>
+                <td>{{ inv.profit_loss|floatformat:2 }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

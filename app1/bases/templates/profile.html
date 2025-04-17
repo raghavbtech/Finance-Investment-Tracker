@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css%}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'baseproject/profile.css' %}">
+{% endblock %}
+{% block main %}
+<div class="main-container" style="margin-top: 50px;">
+    <!-- New Dashboard Header -->
+    <div class="dashboard-header">
+        <h1>Financial Dashboard</h1>
+        <p>Track your financial journey with ease</p>
+    </div>
+
+    <!-- User Profile Card with Avatar -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <h4 class="card-title mb-4 text-center">Personal Information</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="text-muted">Full Name</label>
+                        <p class="h5">{{ user.get_full_name|default:user.username }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted">Email</label>
+                        <p class="h5">{{ user.email }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-3">
+                        <label class="text-muted">Username</label>
+                        <p class="h5">{{ user.username }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="text-muted">Date Joined</label>
+                        <p class="h5">{{ user.date_joined|date:"F d, Y" }}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Fixed button spacing with container -->
+            <div class="button-container">
+                <a href="{% url 'profile_update' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-edit me-2"></i>Edit Profile
+                </a>
+                <a href="{% url 'transaction_list' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-chart-line me-2"></i>Finance Tracker
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Stats Row -->
+    <div class="quick-stats">
+        <div class="quick-stat">
+            <h3>${{ total_amount|floatformat:2 }}</h3>
+            <p>Total Balance</p>
+        </div>
+        <div class="quick-stat">
+            <h3>{{ transaction_count }}</h3>
+            <p>Transactions</p>
+        </div>
+        <div class="quick-stat">
+            <h3>{{ user.date_joined|date:"M Y" }}</h3>
+            <p>Member Since</p>
+        </div>
+    </div>
+
+    <!-- Financial Insights with Bar Graphs -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Spending Distribution</h4>
+            
+            <!-- Sample Bar Graphs -->
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="bar-label">
+                        <span>Food & Dining</span>
+                        <span class="bar-value">35%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 35%;"></div>
+                    </div>
+                    
+                    <div class="bar-label">
+                        <span>Housing & Utilities</span>
+                        <span class="bar-value">25%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 25%;"></div>
+                    </div>
+                    
+                    <div class="bar-label">
+                        <span>Entertainment</span>
+                        <span class="bar-value">15%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 15%;"></div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="bar-label">
+                        <span>Transportation</span>
+                        <span class="bar-value">12%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 12%;"></div>
+                    </div>
+                    
+                    <div class="bar-label">
+                        <span>Shopping</span>
+                        <span class="bar-value">8%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 8%;"></div>
+                    </div>
+                    
+                    <div class="bar-label">
+                        <span>Others</span>
+                        <span class="bar-value">5%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 5%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Financial Summary</h4>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-money-bill-wave text-primary me-2"></i>
+                            <h5 class="mb-0">Total Amount</h5>
+                        </div>
+                        <p class="h3 mb-0">${{ total_amount|floatformat:2 }}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-receipt text-primary me-2"></i>
+                            <h5 class="mb-0">Transactions</h5>
+                        </div>
+                        <p class="h3 mb-0">{{ transaction_count }}</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-calendar text-primary me-2"></i>
+                            <h5 class="mb-0">Member Since</h5>
+                        </div>
+                        <p class="h3 mb-0">{{ user.date_joined|date:"M Y" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Monthly Activity Card -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Monthly Activity</h4>
+            <div class="row">
+                <div class="col-12">
+                    <div class="bar-label">
+                        <span>January</span>
+                        <span class="bar-value">$420</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 42%;"></div>
+                    </div>
+                    
+                    <div class="bar-label">
+                        <span>February</span>
+                        <span class="bar-value">$680</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 68%;"></div>
+                    </div>
+                    
+                    <div class="bar-label">
+                        <span>March</span>
+                        <span class="bar-value">$540</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 54%;"></div>
+                    </div>
+                    
+                    <div class="bar-label">
+                        <span>April</span>
+                        <span class="bar-value">$890</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 89%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Transactions Card -->
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="card-title mb-0">Recent Transactions</h4>
+                <a href="{% url 'transaction_create' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Add New
+                </a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for transaction in recent_transactions %}
+                        <tr>
+                            <td>{{ transaction.category }}</td>
+                            <td>${{ transaction.amount|floatformat:2 }}</td>
+                            <td>{{ transaction.description|default:"-" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">No transactions yet</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% block extra_js %}
+{% endblock %}
+
+{% endblock %}

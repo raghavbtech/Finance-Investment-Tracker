@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+{% block extra_css%}
+<link rel="stylesheet" href="{% static 'baseproject/login.css' %}" />
+
+{% endblock %}
+{% block main %}
+<div class="container" style="margin-top: 50px;">
+    <div class="login-section">
+        <h2>Welcome Back</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">
+                <span>Login</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+        <p class="signup-link">Don't have an account? <a href="{% url 'signup' %}">Register here</a></p>
+    </div>
+
+    <div class="features-section">
+        <div class="feature-card">
+            <h3><i class="fas fa-chart-pie"></i> Market Distribution</h3>
+            <div class="chart-container">
+                <canvas id="marketChart"></canvas>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3><i class="fas fa-trophy"></i> Platform Statistics</h3>
+            <div class="stats-grid">
+                <div class="stat-item"><h4>Daily Trades</h4><p>10K+</p></div>
+                <div class="stat-item"><h4>Active Users</h4><p>50K+</p></div>
+                <div class="stat-item"><h4>Success Rate</h4><p>97%</p></div>
+                <div class="stat-item"><h4>Global Reach</h4><p>120+</p></div>
+            </div>
+        </div>
+
+        <div class="feature-card">
+            <h3><i class="fas fa-clock"></i> Trading Activity</h3>
+            <div class="chart-container">
+                <canvas id="activityChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+{% block extra_js %}
+<script src="{% static 'scripts/login.js' %}"></script>{% endblock %}
+
+{% endblock %}
